@@ -27,7 +27,13 @@ export IP_ADDR=127.0.0.1
 
 echo 'Tailscale started'
 
-echo 'Starting up i2p...'
-
-/app/starti2p.sh
-
+if [ "$1" != "" ]; then
+  exec "$@"
+else
+  echo 'Starting up i2p...'
+  while true; do
+    /app/starti2p.sh
+    echo "Restarting i2p service"
+    sleep 2s
+  done
+fi
